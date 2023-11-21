@@ -6,6 +6,8 @@ import (
 )
 
 type Service interface {
+	Error(ctx context.Context, internalCode string, description string) *ErrorResponse
+	Response(ctx context.Context, description string, data interface{}) *ResponseData
 }
 
 type Cache interface {

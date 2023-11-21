@@ -22,8 +22,11 @@ type Table struct {
 }
 
 type Application struct {
-	Host string `mapstructure:"HOST"`
-	Port string `mapstructure:"PORT"`
+	Host       string `mapstructure:"HOST"`
+	Port       string `mapstructure:"PORT"`
+	DbName     string `mapstructure:"DB_NAME"`
+	DbHost     string `mapstructure:"DB_HOST"`
+	DbPassword string `mapstructure:"DB_PASSWORD"`
 }
 
 var appConfig *Application
@@ -38,8 +41,11 @@ func loadApp() {
 	viper.AutomaticEnv()
 
 	appConfig = &Application{
-		Host: viper.GetString("HOST"),
-		Port: viper.GetString("PORT"),
+		Host:       viper.GetString("HOST"),
+		Port:       viper.GetString("PORT"),
+		DbName:     viper.GetString("DB_NAME"),
+		DbHost:     viper.GetString("DB_HOST"),
+		DbPassword: viper.GetString("DB_PASSWORD"),
 	}
 }
 
