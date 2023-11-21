@@ -18,6 +18,7 @@ type Table struct {
 	SupplierTableName     string `mapstructure:"SUPPLIER_TABLE_NAME"`
 	ProductTableName      string `mapstructure:"PRODUCT_TABLE_NAME"`
 	ProductStockTableName string `mapstructure:"PRODUCT_STOCK_TABLE_NAME"`
+	ErrorTableName        string `mapstructure:"ERROR_TABLE_NAME"`
 }
 
 type Application struct {
@@ -56,6 +57,7 @@ func loadTable() {
 		SupplierTableName:     viper.GetString("SUPPLIER_TABLE_NAME"),
 		ProductTableName:      viper.GetString("PRODUCT_TABLE_NAME"),
 		ProductStockTableName: viper.GetString("PRODUCT_STOCK_TABLE_NAME"),
+		ErrorTableName:        viper.GetString("ERROR_TABLE_NAME"),
 	}
 }
 

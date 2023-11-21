@@ -6,17 +6,17 @@ import (
 	"github.com/Tonmoy404/Assessment/service"
 )
 
-type BrandRepo interface {
-	service.BrandRepo
+type SupplierRepo interface {
+	service.SupplierRepo
 }
 
-type brandRepo struct {
+type supplierRepo struct {
 	db        *sql.DB
 	tableName string
 }
 
-func NewBrandRepo(db *sql.DB, tableName string) BrandRepo {
-	return &brandRepo{
+func NewSupplierRepo(db *sql.DB, tableName string) CategoryRepo {
+	return &categoryRepo{
 		db:        db,
 		tableName: tableName,
 	}

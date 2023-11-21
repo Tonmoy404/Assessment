@@ -1,6 +1,9 @@
 package service
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 type Service interface {
 }
@@ -10,4 +13,23 @@ type Cache interface {
 	Get(key string) (string, error)
 	Delete(key string) error
 	GetTTL(key string) (time.Duration, error)
+}
+
+type BrandRepo interface {
+}
+
+type CategoryRepo interface {
+}
+
+type ProductRepo interface {
+}
+
+type SupplierRepo interface {
+}
+
+type ProductStockRepo interface {
+}
+
+type ErrorRepo interface {
+	GetError(ctx context.Context, internalCode string) (*ErrorDetail, error)
 }
