@@ -25,7 +25,6 @@ func servreRest() {
 	productRepo := repo.NewProductRepo(db, tableConfig.ProductTableName)
 	categoryRepo := repo.NewCategoryRepo(db, tableConfig.CategoryTableName)
 	supplierRepo := repo.NewSupplierRepo(db, tableConfig.SupplierTableName)
-	productStockRepo := repo.NewProductStockRepo(db, tableConfig.ProductStockTableName)
 	errRepo := repo.NewErrorRepo(db, tableConfig.ErrorTableName)
 
 	redisClient := redis.NewClient(&redis.Options{
@@ -33,7 +32,7 @@ func servreRest() {
 	})
 	cache := cache.NewCache(redisClient)
 
-	svc := service.NewService(brandRepo, categoryRepo, productRepo, supplierRepo, productStockRepo, cache, errRepo)
+	svc := service.NewService(brandRepo, categoryRepo, productRepo, supplierRepo, cache, errRepo)
 
 	server, err := rest.NewServer(appConfig, svc)
 	if err != nil {

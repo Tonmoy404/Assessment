@@ -5,7 +5,7 @@ type Supplier struct {
 	Name               string `json:"Name"`
 	Email              string `json:"Email"`
 	Phone              string `json:"Phone"`
-	StatusId           string `json:"StatusId"`
-	IsVerifiedSupplier string `json:"IsVerifiedSupplier"`
+	StatusId           int64 `json:"StatusId"`
+	IsVerifiedSupplier bool   `json:"IsVerifiedSupplier"`
 	CreatedAt          int64  `json:"CreatedAt"`
 }

@@ -9,13 +9,12 @@ import (
 )
 
 type service struct {
-	brandRepo        BrandRepo
-	categoryRepo     CategoryRepo
-	productRepo      ProductRepo
-	supplierRepo     SupplierRepo
-	productStockRepo ProductStockRepo
-	cache            Cache
-	errRepo          ErrorRepo
+	brandRepo    BrandRepo
+	categoryRepo CategoryRepo
+	productRepo  ProductRepo
+	supplierRepo SupplierRepo
+	cache        Cache
+	errRepo      ErrorRepo
 }
 
 func NewService(
@@ -23,19 +22,17 @@ func NewService(
 	categoryRepo CategoryRepo,
 	productRepo ProductRepo,
 	supplierRepo SupplierRepo,
-	productStockRepo ProductStockRepo,
 	cache Cache,
 	errRepo ErrorRepo,
 
 ) Service {
 	return &service{
-		brandRepo:        brandRepo,
-		categoryRepo:     categoryRepo,
-		productRepo:      productRepo,
-		supplierRepo:     supplierRepo,
-		productStockRepo: productStockRepo,
-		cache:            cache,
-		errRepo:          errRepo,
+		brandRepo:    brandRepo,
+		categoryRepo: categoryRepo,
+		productRepo:  productRepo,
+		supplierRepo: supplierRepo,
+		cache:        cache,
+		errRepo:      errRepo,
 	}
 }
 

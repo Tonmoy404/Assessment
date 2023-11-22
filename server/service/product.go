@@ -11,7 +11,8 @@ type Product struct {
 	UnitPrice     float64  `json:"UnitPrice"`
 	DiscountPrice float64  `json:"DiscountPrice"`
 	Tags          []string `json:"Tags"`
-	StatusId      string   `json:"StatusId"`
+	StatusId      int64    `json:"StatusId"`
+	Stock         int64    `json:"Stock"`
 	CreatedAt     int64    `json:"CreatedAt"`
 }
 
@@ -23,4 +24,11 @@ type FilterProducts struct {
 	CategoryId string  `json:"CategoryId"`
 	SupplierId string  `json:"SupplierId"`
 	Limit      int64   `json:"Limit"`
+}
+
+type ProductResult struct {
+	Products []Product `json:"products"`
+	Total    int64     `json:"total"`
+	Page     int64     `json:"page"`
+	Limit    int64     `json:"limit"`
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *Server) createCategory(ctx *gin.Context) {
+func (s *Server) createProduct(ctx *gin.Context) {
 	var req createProductReq
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
@@ -26,10 +26,22 @@ func (s *Server) createCategory(ctx *gin.Context) {
 		return
 	}
 
+	if existBrand == nil {
+		logger.Error(ctx, "Brand not found", nil)
+		ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, "Brand not found", err))
+		return
+	}
+
 	existSupplier, err := s.svc.GetSupplier(ctx, req.SupplierId)
 	if err != nil {
-		logger.Error(ctx, "cannot find suplpier", err)
+		logger.Error(ctx, "cannot find supplier", err)
 		ctx.JSON(http.StatusNotFound, s.svc.Error(ctx, util.EN_NOT_FOUND, "Not Found"))
+		return
+	}
+
+	if existSupplier == nil {
+		logger.Error(ctx, "Supplier not found", nil)
+		ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, "Supplier not found", err))
 		return
 	}
 
@@ -37,6 +49,12 @@ func (s *Server) createCategory(ctx *gin.Context) {
 	if err != nil {
 		logger.Error(ctx, "cannot find category", err)
 		ctx.JSON(http.StatusNotFound, s.svc.Error(ctx, util.EN_NOT_FOUND, "Not Found"))
+		return
+	}
+
+	if existCategory == nil {
+		logger.Error(ctx, "Brand not found", nil)
+		ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, "Brand not found", err))
 		return
 	}
 
@@ -75,14 +93,14 @@ func (s *Server) createCategory(ctx *gin.Context) {
 		CreatedAt:     util.GetCurrentTimestamp(),
 	}
 
-	err = s.svc.CreateProduct(ctx, newProduct)
+	newPro, err := s.svc.CreateProduct(ctx, newProduct)
 	if err != nil {
 		logger.Error(ctx, "cannot create product", err)
 		ctx.JSON(http.StatusInternalServerError, s.svc.Error(ctx, util.EN_INTERNAL_SERVER_ERROR, "Internal server error"))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, s.svc.Response(ctx, "Success", newProduct))
+	ctx.JSON(http.StatusCreated, s.svc.Response(ctx, "Success", newPro))
 }
 
 func (s *Server) getProducts(ctx *gin.Context) {
@@ -94,7 +112,7 @@ func (s *Server) getProducts(ctx *gin.Context) {
 		return
 	}
 
-	filter := &filterProductsReq{
+	filter := &service.FilterProducts{
 		Name:       req.Name,
 		MaxPrice:   req.MaxPrice,
 		MinPrice:   req.MinPrice,
@@ -115,5 +133,90 @@ func (s *Server) getProducts(ctx *gin.Context) {
 }
 
 func (s *Server) getProduct(ctx *gin.Context) {
+	id := ctx.Param("id")
 
+	product, err := s.svc.GetProduct(ctx, id)
+	if err != nil {
+		logger.Error(ctx, "cannot get product", err)
+		ctx.JSON(http.StatusInternalServerError, s.svc.Error(ctx, util.EN_INTERNAL_SERVER_ERROR, "Internal Server Error"))
+		return
+	}
+
+	if product == nil {
+		logger.Error(ctx, "cannot find product", err)
+		ctx.JSON(http.StatusNotFound, s.svc.Response(ctx, util.EN_NOT_FOUND, "Not Found"))
+		return
+	}
+}
+
+func (s *Server) updateProduct(ctx *gin.Context) {
+	var req updateProductReq
+	err := ctx.ShouldBindJSON(&req)
+	if err != nil {
+		logger.Error(ctx, "cannot pass validation", err)
+		ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, util.EN_API_PARAMETER_INVALID_ERROR, err))
+		return
+	}
+
+	productId := ctx.Param("id")
+
+	product, err := s.svc.GetProduct(ctx, productId)
+	if err != nil {
+		logger.Error(ctx, "cannot get product", err)
+		ctx.JSON(http.StatusInternalServerError, s.svc.Response(ctx, util.EN_INTERNAL_SERVER_ERROR, err))
+		return
+	}
+
+	if product == nil {
+		logger.Error(ctx, "product not found", nil)
+		ctx.JSON(http.StatusNotFound, s.svc.Response(ctx, util.EN_NOT_FOUND, "Not found"))
+		return
+	}
+
+	product.Name = req.Name
+	product.Description = req.Description
+	product.Specification = req.Specifications
+	product.BrandId = req.BrandID
+	product.CategoryId = req.CategoryID
+	product.SupplierId = req.SupplierID
+	product.Stock = req.Stock
+	product.UnitPrice = req.UnitPrice
+	product.DiscountPrice = req.DiscountPrice
+	product.Tags = req.Tags
+	product.StatusId = req.StatusID
+
+	err = s.svc.UpdateProduct(ctx, product)
+	if err != nil {
+		logger.Error(ctx, "cannot update product", err)
+		ctx.JSON(http.StatusInternalServerError, s.svc.Response(ctx, util.EN_INTERNAL_SERVER_ERROR, err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, s.svc.Response(ctx, "Upadted Successfully", product))
+}
+
+func (s *Server) deleteProduct(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	product, err := s.svc.GetProduct(ctx, id)
+	if err != nil {
+		logger.Error(ctx, "cannot get product", err)
+		ctx.JSON(http.StatusInternalServerError, s.svc.Response(ctx, util.EN_INTERNAL_SERVER_ERROR, err))
+		return
+	}
+
+	if product == nil {
+		logger.Error(ctx, "product not found", nil)
+		ctx.JSON(http.StatusNotFound, s.svc.Response(ctx, util.EN_NOT_FOUND, "Not found"))
+		return
+	}
+
+	err = s.svc.DeleteProduct(ctx, id)
+	if err != nil {
+		logger.Error(ctx, "cannot delete product", err)
+		ctx.JSON(http.StatusInternalServerError, s.svc.Response(ctx, util.EN_INTERNAL_SERVER_ERROR, err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, s.svc.Response(ctx, "Deleted Successfully", product))
 }
