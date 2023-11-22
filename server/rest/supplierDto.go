@@ -17,6 +17,6 @@ type updateSupplierReq struct {
 	Name               string `json:"name" binding:"required,min=2"`
 	Email              string `json:"email" binding:"required,email"`
 	Phone              string `json:"phone" binding:"required"`
-	StatusID           int    `json:"status_id" binding:"required"`
+	StatusID           int64   `json:"status_id" binding:"required"`
 	IsVerifiedSupplier bool   `json:"is_verified_supplier" binding:"required"`
 }

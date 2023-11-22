@@ -36,14 +36,14 @@ func (s *Server) createSupplier(ctx *gin.Context) {
 		CreatedAt:          util.GetCurrentTimestamp(),
 	}
 
-	err = s.svc.CreateSupplier(ctx, newSupplier)
+	supp, err := s.svc.CreateSupplier(ctx, newSupplier)
 	if err != nil {
 		logger.Error(ctx, "cannot create supplier", err)
 		ctx.JSON(http.StatusInternalServerError, s.svc.Response(ctx, util.EN_INTERNAL_SERVER_ERROR, "Internal Server Error"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, s.svc.Response(ctx, "Supplier Added Successfully", nil))
+	ctx.JSON(http.StatusOK, s.svc.Response(ctx, "Supplier Added Successfully", supp))
 }
 
 func (s *Server) deleteSupplier(ctx *gin.Context) {
@@ -142,7 +142,7 @@ func (s *Server) updateSupplier(ctx *gin.Context) {
 	supplier.Name = req.Name
 	supplier.Email = req.Email
 	supplier.Phone = req.Phone
-	supplier.StatusID = req.StatusID
+	supplier.StatusId = req.StatusID
 	supplier.IsVerifiedSupplier = req.IsVerifiedSupplier
 
 	err = s.svc.UpdateSupplier(ctx, supplier)

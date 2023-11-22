@@ -22,6 +22,13 @@ type Service interface {
 	GetProducts(ctx context.Context, param *FilterProducts) (*ProductResult, error)
 	UpdateProduct(ctx context.Context, product *Product) error
 	DeleteProduct(ctx context.Context, id string) error
+
+	///Supplier Services
+	CreateSupplier(ctx context.Context, newSupplier *Supplier) (*Supplier, error)
+	GetSupplier(ctx context.Context, id string) (*Supplier, error)
+	UpdateSupplier(ctx context.Context, supplier *Supplier) error
+	DeleteSupplier(ctx context.Context, id string) error
+	GetSuppliers(ctx context.Context, page, limit int64) (*SupplierResult, error)
 }
 
 type Cache interface {
