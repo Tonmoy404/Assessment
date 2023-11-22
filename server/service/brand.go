@@ -9,8 +9,7 @@ type Brand struct {
 
 type BrandResult struct {
 	Brands []*Brand `json:"brands"`
-	Total  int64    `json:"total"`
+	Total  int      `json:"total"`
 	Page   int64    `json:"page"`
 	Limit  int64    `json:"limit"`
 }
-

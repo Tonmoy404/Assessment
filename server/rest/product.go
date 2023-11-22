@@ -45,18 +45,18 @@ func (s *Server) createProduct(ctx *gin.Context) {
 		return
 	}
 
-	existCategory, err := s.svc.GetCategory(ctx, req.CategoryId)
-	if err != nil {
-		logger.Error(ctx, "cannot find category", err)
-		ctx.JSON(http.StatusNotFound, s.svc.Error(ctx, util.EN_NOT_FOUND, "Not Found"))
-		return
-	}
+	// existCategory, err := s.svc.GetCategory(ctx, req.CategoryId)
+	// if err != nil {
+	// 	logger.Error(ctx, "cannot find category", err)
+	// 	ctx.JSON(http.StatusNotFound, s.svc.Error(ctx, util.EN_NOT_FOUND, "Not Found"))
+	// 	return
+	// }
 
-	if existCategory == nil {
-		logger.Error(ctx, "Brand not found", nil)
-		ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, "Brand not found", err))
-		return
-	}
+	// if existCategory == nil {
+	// 	logger.Error(ctx, "Brand not found", nil)
+	// 	ctx.JSON(http.StatusBadRequest, s.svc.Response(ctx, "Brand not found", err))
+	// 	return
+	// }
 
 	existProduct, err := s.svc.GetProduct(ctx, req.Name)
 	if err != nil {

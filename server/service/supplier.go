@@ -11,7 +11,8 @@ type Supplier struct {
 }
 
 type SupplierResult struct {
-	Suppliers []Supplier `json:"suppliers"`
-	Page      int64      `json:"page"`
-	Limit     int64      `json:"limit"`
+	Suppliers []*Supplier `json:"suppliers"`
+	Total     int         `json:"total"`
+	Page      int64       `json:"page"`
+	Limit     int64       `json:"limit"`
 }
