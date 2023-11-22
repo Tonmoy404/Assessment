@@ -13,8 +13,8 @@ type supplierRepo struct {
 	db *sqlx.DB
 }
 
-func NewSupplierRepo(db *sqlx.DB) CategoryRepo {
-	return &categoryRepo{
+func NewSupplierRepo(db *sqlx.DB) SupplierRepo {
+	return &supplierRepo{
 		db: db,
 	}
 }

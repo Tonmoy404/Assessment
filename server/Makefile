@@ -10,6 +10,9 @@ runpostgress:
 startpostgress:
 	sudo docker start my-postgres
 
+stoppostgress:
+	sudo docker stop my-postgres
+
 createdb:
 	sudo docker exec -it my-postgres createdb -U postgres mydatabase
 

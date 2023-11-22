@@ -17,13 +17,14 @@ type Product struct {
 }
 
 type FilterProducts struct {
-	Name       string  `json:"Name"`
-	MaxPrice   float64 `json:"MaxPrice"`
-	MinPrice   float64 `json:"MinPrice"`
-	BrandId    string  `json:"BrandId"`
-	CategoryId string  `json:"CategoryId"`
-	SupplierId string  `json:"SupplierId"`
-	Limit      int64   `json:"Limit"`
+	Name       string   `json:"Name"`
+	MaxPrice   float64  `json:"MaxPrice"`
+	MinPrice   float64  `json:"MinPrice"`
+	BrandId    string   `json:"BrandId"`
+	CategoryId string   `json:"CategoryId"`
+	SupplierId string   `json:"SupplierId"`
+	Limit      int64    `json:"Limit"`
+	Tags       []string `json:"Tags"`
 }
 
 type ProductResult struct {
