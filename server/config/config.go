@@ -14,7 +14,7 @@ var dbOnce = sync.Once{}
 type DB struct {
 	Host     string `mapstructure:"DB_HOST"`
 	Port     string `mapstructure:"DB_PORT"`
-	UserName string `mapstructure:"DB_USERNAME"`
+	User     string `mapstructure:"DB_USER"`
 	Password string `mapstructure:"DB_PASSWORD"`
 	DBName   string `mapstructure:"DB_NAME"`
 }
@@ -52,7 +52,7 @@ func loadTable() {
 		Host:     viper.GetString("DB_HOST"),
 		Port:     viper.GetString("DB_PORT"),
 		DBName:   viper.GetString("DB_NAME"),
-		UserName: viper.GetString("DB_USERNAME"),
+		User:     viper.GetString("DB_USER"),
 		Password: viper.GetString("DB_PASSWORD"),
 	}
 }
