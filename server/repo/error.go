@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/Tonmoy404/Assessment/service"
+	"github.com/jmoiron/sqlx"
 )
 
 type ErrorRepo interface {
@@ -13,11 +14,11 @@ type ErrorRepo interface {
 }
 
 type errorRepo struct {
-	db        *sql.DB
+	db        *sqlx.DB
 	tableName string
 }
 
-func NewErrorRepo(db *sql.DB, tableName string) ErrorRepo {
+func NewErrorRepo(db *sqlx.DB, tableName string) ErrorRepo {
 	return &errorRepo{
 		db:        db,
 		tableName: tableName,

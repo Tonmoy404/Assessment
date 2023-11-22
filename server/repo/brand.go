@@ -1,9 +1,8 @@
 package repo
 
 import (
-	"database/sql"
-
 	"github.com/Tonmoy404/Assessment/service"
+	"github.com/jmoiron/sqlx"
 )
 
 type BrandRepo interface {
@@ -11,13 +10,11 @@ type BrandRepo interface {
 }
 
 type brandRepo struct {
-	db        *sql.DB
-	tableName string
+	db *sqlx.DB
 }
 
-func NewBrandRepo(db *sql.DB, tableName string) BrandRepo {
+func NewBrandRepo(db *sqlx.DB) BrandRepo {
 	return &brandRepo{
-		db:        db,
-		tableName: tableName,
+		db: db,
 	}
 }

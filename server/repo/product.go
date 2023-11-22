@@ -1,9 +1,8 @@
 package repo
 
 import (
-	"database/sql"
-
 	"github.com/Tonmoy404/Assessment/service"
+	"github.com/jmoiron/sqlx"
 )
 
 type ProductRepo interface {
@@ -11,13 +10,11 @@ type ProductRepo interface {
 }
 
 type productRepo struct {
-	db        *sql.DB
-	tableName string
+	db *sqlx.DB
 }
 
-func NewProductRepo(db *sql.DB, tableName string) ProductRepo {
+func NewProductRepo(db *sqlx.DB) ProductRepo {
 	return &productRepo{
-		db:        db,
-		tableName: tableName,
+		db: db,
 	}
 }

@@ -1,9 +1,8 @@
 package repo
 
 import (
-	"database/sql"
-
 	"github.com/Tonmoy404/Assessment/service"
+	"github.com/jmoiron/sqlx"
 )
 
 type CategoryRepo interface {
@@ -11,13 +10,11 @@ type CategoryRepo interface {
 }
 
 type categoryRepo struct {
-	db        *sql.DB
-	tableName string
+	db *sqlx.DB
 }
 
-func NewCategoryRepo(db *sql.DB, tableName string) CategoryRepo {
+func NewCategoryRepo(db *sqlx.DB) CategoryRepo {
 	return &categoryRepo{
-		db:        db,
-		tableName: tableName,
+		db: db,
 	}
 }

@@ -39,15 +39,30 @@ type Cache interface {
 }
 
 type BrandRepo interface {
+	Create(ctx context.Context, brand *Brand) (*Brand, error)
+	Get(ctx context.Context, id string) (*Brand, error)
+	GetAll(ctx context.Context, page, limit int64) (*BrandResult, error)
+	Update(ctx context.Context, brand *Brand) error
+	Delete(ctx context.Context, id string) error
 }
 
 type CategoryRepo interface {
 }
 
 type ProductRepo interface {
+	Create(ctx context.Context, product *Product) (*Product, error)
+	Get(ctx context.Context, id string) (*Product, error)
+	GetAll(ctx context.Context, filterParams *FilterProducts) (*ProductResult, error)
+	Update(ctx context.Context, product *Product) error
+	Delete(ctx context.Context, id string) error
 }
 
 type SupplierRepo interface {
+	Create(ctx context.Context, supplier *Supplier) (*Supplier, error)
+	Get(ctx context.Context, id string) (*Supplier, error)
+	GetAll(ctx context.Context, page, limit int64) (*SupplierResult, error)
+	Update(ctx context.Context, supplier *Supplier) error
+	Delete(ctx context.Context, id string) error
 }
 
 type ErrorRepo interface {

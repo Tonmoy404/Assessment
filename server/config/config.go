@@ -9,28 +9,22 @@ import (
 )
 
 var appOnce = sync.Once{}
-var tableOnce = sync.Once{}
-var saltOnce = sync.Once{}
+var dbOnce = sync.Once{}
 
-type Table struct {
-	BrandTableName        string `mapstructure:"BRAND_TABLE_NAME"`
-	CategoryTableName     string `mapstructure:"CATEGORY_TABLE_NAME"`
-	SupplierTableName     string `mapstructure:"SUPPLIER_TABLE_NAME"`
-	ProductTableName      string `mapstructure:"PRODUCT_TABLE_NAME"`
-	ProductStockTableName string `mapstructure:"PRODUCT_STOCK_TABLE_NAME"`
-	ErrorTableName        string `mapstructure:"ERROR_TABLE_NAME"`
+type DB struct {
+	Host     string `mapstructure:"DB_HOST"`
+	Port     string `mapstructure:"DB_PORT"`
+	UserName string `mapstructure:"DB_USERNAME"`
+	Password string `mapstructure:"DB_PASSWORD"`
+	DBName   string `mapstructure:"DB_NAME"`
 }
-
 type Application struct {
-	Host       string `mapstructure:"HOST"`
-	Port       string `mapstructure:"PORT"`
-	DbName     string `mapstructure:"DB_NAME"`
-	DbHost     string `mapstructure:"DB_HOST"`
-	DbPassword string `mapstructure:"DB_PASSWORD"`
+	Host string `mapstructure:"HOST"`
+	Port string `mapstructure:"PORT"`
 }
 
 var appConfig *Application
-var tableConfig *Table
+var dbConfig *DB
 
 func loadApp() {
 	err := godotenv.Load(".env")
@@ -41,11 +35,8 @@ func loadApp() {
 	viper.AutomaticEnv()
 
 	appConfig = &Application{
-		Host:       viper.GetString("HOST"),
-		Port:       viper.GetString("PORT"),
-		DbName:     viper.GetString("DB_NAME"),
-		DbHost:     viper.GetString("DB_HOST"),
-		DbPassword: viper.GetString("DB_PASSWORD"),
+		Host: viper.GetString("HOST"),
+		Port: viper.GetString("PORT"),
 	}
 }
 
@@ -57,13 +48,12 @@ func loadTable() {
 
 	viper.AutomaticEnv()
 
-	tableConfig = &Table{
-		BrandTableName:        viper.GetString("BRAND_TABLE_NAME"),
-		CategoryTableName:     viper.GetString("CATEGORY_TABLE_NAME"),
-		SupplierTableName:     viper.GetString("SUPPLIER_TABLE_NAME"),
-		ProductTableName:      viper.GetString("PRODUCT_TABLE_NAME"),
-		ProductStockTableName: viper.GetString("PRODUCT_STOCK_TABLE_NAME"),
-		ErrorTableName:        viper.GetString("ERROR_TABLE_NAME"),
+	dbConfig = &DB{
+		Host:     viper.GetString("DB_HOST"),
+		Port:     viper.GetString("DB_PORT"),
+		DBName:   viper.GetString("DB_NAME"),
+		UserName: viper.GetString("DB_USERNAME"),
+		Password: viper.GetString("DB_PASSWORD"),
 	}
 }
 
@@ -74,9 +64,9 @@ func GetApp() *Application {
 	return appConfig
 }
 
-func GetTable() *Table {
-	tableOnce.Do(func() {
+func GetDB() *DB {
+	dbOnce.Do(func() {
 		loadTable()
 	})
-	return tableConfig
+	return dbConfig
 }

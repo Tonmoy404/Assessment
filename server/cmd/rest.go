@@ -1,7 +1,8 @@
 package cmd
 
 import (
-	"database/sql"
+	"fmt"
+	"log"
 
 	"github.com/Tonmoy404/Assessment/cache"
 	"github.com/Tonmoy404/Assessment/config"
@@ -9,23 +10,27 @@ import (
 	"github.com/Tonmoy404/Assessment/rest"
 	"github.com/Tonmoy404/Assessment/service"
 	"github.com/go-redis/redis"
+	"github.com/jmoiron/sqlx"
 )
 
-func servreRest() {
-	appConfig := config.GetApp()
-	tableConfig := config.GetTable()
+const ERROR_TABLE = "error_tables"
 
-	db, err := sql.Open("postgres", "postgres://username:password@localhost/mydatabase?sslmode=disable")
+func serveRest() {
+	appConfig := config.GetApp()
+	dbConfig := config.GetDB()
+
+	db, err := sqlx.Connect("postgres", fmt.Sprintf("host=%s port=%s username=%s password=%s dbname=%s sslmode=disable", dbConfig.Host, dbConfig.Port, dbConfig.UserName, dbConfig.Password, dbConfig.DBName))
+
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer db.Close()
 
-	brandRepo := repo.NewBrandRepo(db, tableConfig.BrandTableName)
-	productRepo := repo.NewProductRepo(db, tableConfig.ProductTableName)
-	categoryRepo := repo.NewCategoryRepo(db, tableConfig.CategoryTableName)
-	supplierRepo := repo.NewSupplierRepo(db, tableConfig.SupplierTableName)
-	errRepo := repo.NewErrorRepo(db, tableConfig.ErrorTableName)
+	brandRepo := repo.NewBrandRepo(db)
+	productRepo := repo.NewProductRepo(db)
+	categoryRepo := repo.NewCategoryRepo(db)
+	supplierRepo := repo.NewSupplierRepo(db)
+	errRepo := repo.NewErrorRepo(db, ERROR_TABLE)
 
 	redisClient := redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
