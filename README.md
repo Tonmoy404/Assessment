@@ -1,4 +1,33 @@
-# Assessment
+# Project Name
+
+This project is a Ecommerce.
+
+## Installation
+
+Make sure you have Go installed. Run the following commands to start the project:
+
+```bash
+go mod tidy
+go run main.go
+
+
+Ensure the following environment variables are set in your .env file
+
+HOST=localhost
+PORT=3000
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mydb
+DB_USER=postgres
+DB_PASS=mysecretpassword
+
+
+Create Brand (POST)
+
+
+
 
 For starting the project simply need to install Go. Then USE go mod tidy to install all depenencies. 
 Connect the Database with given credentials below
