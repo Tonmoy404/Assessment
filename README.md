@@ -24,9 +24,6 @@ DB_USER=postgres
 DB_PASS=mysecretpassword
 
 
-Create Brand (POST)
-
-
 
 
 For starting the project simply need to install Go. Then USE go mod tidy to install all depenencies. 
@@ -141,17 +138,3 @@ Delete Product -- Method DELETE
 http://localhost:5000/api/product/b10c8de7-f6a8-4fc9-a5da-61420f3096dc
 
 
-
-#dotENV
-
-
-HOST=localhost
-PORT=3000
-
-# DB
-
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=mydb
-DB_USER=postgres
-DB_PASS=mysecretpassword
