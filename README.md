@@ -39,15 +39,6 @@ SQL
 		created_at BIGINT NOT NULL
 	);
 
-	CREATE TABLE IF NOT EXISTS categories (
-		id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-		name VARCHAR(255) NOT NULL,
-		parent_id UUID,
-		sequence INTEGER,
-		status_id INTEGER NOT NULL,
-		created_at BIGINT NOT NULL
-	);
-
 	CREATE TABLE IF NOT EXISTS suppliers (
 		id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 		name VARCHAR(255) NOT NULL,
