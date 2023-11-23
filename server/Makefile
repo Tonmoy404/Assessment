@@ -3,21 +3,23 @@ start:
 
 install_psql:
 	sudo docker pull postgres
+init_postgress: 
+	sudo docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
 
-runpostgress: 
-	sudo docker run --name tonmoy -e POSTGRES_PASSWORD=tonmoy404 -p 5432:5432 -d postgres
+run_postgress:
+	sudo docker start postgres-container
 
-startpostgress:
-	sudo docker start my-postgres
-
-stoppostgress:
-	sudo docker stop my-postgres
+stop_postgress:
+	sudo docker stop postgres-container
 
 createdb:
-	sudo docker exec -it my-postgres createdb -U postgres mydatabase
+	sudo docker exec -it postgres-container createdb -U postgres ecommerce
 
 dropdb:
-	sudo docker exec -it my-postgres dropdb -U postgres mydatabase
+	sudo docker exec -it postgres-container dropdb -U postgres ecommerce
 
+containers:
+	sudo docker ps -a
 
-
+remove:
+	sudo docker rm 

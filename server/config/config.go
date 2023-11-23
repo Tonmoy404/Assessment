@@ -12,11 +12,11 @@ var appOnce = sync.Once{}
 var dbOnce = sync.Once{}
 
 type DB struct {
-	Host     string `mapstructure:"DB_HOST"`
-	Port     string `mapstructure:"DB_PORT"`
-	User     string `mapstructure:"DB_USER"`
-	Password string `mapstructure:"DB_PASSWORD"`
-	DBName   string `mapstructure:"DB_NAME"`
+	Host   string `mapstructure:"DB_HOST"`
+	Port   string `mapstructure:"DB_PORT"`
+	User   string `mapstructure:"DB_USER"`
+	Pass   string `mapstructure:"DB_PASS"`
+	DBName string `mapstructure:"DB_NAME"`
 }
 type Application struct {
 	Host string `mapstructure:"HOST"`
@@ -49,11 +49,11 @@ func loadTable() {
 	viper.AutomaticEnv()
 
 	dbConfig = &DB{
-		Host:     viper.GetString("DB_HOST"),
-		Port:     viper.GetString("DB_PORT"),
-		DBName:   viper.GetString("DB_NAME"),
-		User:     viper.GetString("DB_USER"),
-		Password: viper.GetString("DB_PASSWORD"),
+		Host:   viper.GetString("DB_HOST"),
+		Port:   viper.GetString("DB_PORT"),
+		DBName: viper.GetString("DB_NAME"),
+		User:   viper.GetString("DB_USER"),
+		Pass:   viper.GetString("DB_PASS"),
 	}
 }
 

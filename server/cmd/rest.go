@@ -19,7 +19,7 @@ func serveRest() {
 	appConfig := config.GetApp()
 	dbConfig := config.GetDB()
 
-	db, err := sqlx.Connect("postgres", fmt.Sprintf("host=%s port=%s username=%s password=%s dbname=%s sslmode=disable", dbConfig.Host, dbConfig.Port, dbConfig.User, dbConfig.Password, dbConfig.DBName))
+	db, err := sqlx.Connect("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbConfig.Host, dbConfig.Port, dbConfig.User, dbConfig.Pass, dbConfig.DBName))
 
 	if err != nil {
 		log.Fatal(err)

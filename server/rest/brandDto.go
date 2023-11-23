@@ -2,7 +2,7 @@ package rest
 
 type createBrandReq struct {
 	Name     string `json:"name" binding:"required"`
-	StatusId int64  `json:"status_id" binding:"required"`
+	StatusId int64    `json:"status_id" binding:"required"`
 }
 
 type getBrandsReq struct {
